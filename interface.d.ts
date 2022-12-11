@@ -1,6 +1,10 @@
 /*
 * - A L L -
 */
+export interface ISimpleRegistre {
+      designation: string
+      description?: string
+}
 
 export interface IFindByKeyValue {
       key: string,

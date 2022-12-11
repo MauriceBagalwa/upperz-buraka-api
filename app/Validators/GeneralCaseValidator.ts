@@ -38,6 +38,10 @@ export default class GeneralCaseValidator {
     id: schema.string([rules.uuid()])
   })
 
+  public v_id_param = schema.create({
+    id: schema.string([rules.uuid()])
+  })
+
   public v_profile = schema.create({
     profile: schema.file({
       extnames: ['jpg', 'png', 'gif', 'jpeg'],
