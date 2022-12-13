@@ -61,6 +61,11 @@
     security:
       - bearerAuth: []
     description: update entreprise data.
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
     requestBody:
       required: true
       content:
@@ -91,6 +96,11 @@
     tags:
       - Entreprise
     description: update entreprise's logo.
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
     requestBody:
       content:
         multipart/form-data:
@@ -114,7 +124,6 @@
           application/json:
             schema:
               $ref: "#/components/schemas/error_response"
-
 
 components:
   schemas:

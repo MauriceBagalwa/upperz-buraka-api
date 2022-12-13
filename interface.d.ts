@@ -1,3 +1,5 @@
+import TypeAppartement from "App/Models/TypeAppartement"
+
 /*
 * - A L L -
 */
@@ -59,4 +61,27 @@ export interface IBankAcount {
       bank: string
       account_name: string
       account_number: number
+}
+
+/**
+ * Appartement
+ */
+
+export interface IQAppartement extends IQuerry {
+      typeAppartement: string
+      typeBien: string
+}
+
+export interface IAppartement {
+      typeBienId: string
+      typeAppartementId: string
+      description: string
+      features: string
+      address: string
+      number?: number
+}
+
+export interface IAppartementImage {
+      appartement_id: string
+      url: string
 }

@@ -1,0 +1,32 @@
+components:
+  schemas:
+    typeBien:
+      type: object
+      properties:
+        designation:
+          type: string
+        description:
+          type: string
+      required:
+        - designation
+    appatements:
+      type: object
+      properties:
+        typeBienId:
+          type: string
+        typeAppartementId:
+          type: string
+        description:
+          type: string
+        features:
+          type: string
+        address:
+          type: string
+        number:
+          type: number
+      required:
+        - typeBienId
+        - typeAppartementId
+        - description
+        - features
+        - address

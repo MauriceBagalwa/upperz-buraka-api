@@ -49,6 +49,13 @@ export default class GeneralCaseValidator {
     }),
   })
 
+  public v_multi_profile = schema.create({
+    profile: schema.file({
+      extnames: ['jpg', 'png', 'gif', 'jpeg'],
+      size: '2mb',
+    }),
+  })
+
 
   /* A validation for the login route. */
   public v_sign = schema.create({

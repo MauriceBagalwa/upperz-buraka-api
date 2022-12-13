@@ -54,12 +54,13 @@ export default class UsersController extends UserValidator {
        */
       public async profile({ request, response }: HttpContextContract) {
             //1
-            const profile = await request.validate({ schema: this.v_profile })
+            const { profile } = await request.validate({ schema: this.v_profile })
+
             try {
                   //2
                   if (profile) {
                         //3
-                        const result = await upload.uploads(profile.profile)
+                        const result = await upload.single(profile)
                         return response.ok({
                               status: true,
                               data: { url: result.secure_url },
@@ -69,7 +70,7 @@ export default class UsersController extends UserValidator {
                   throw new Error('Echec de chargement du profile.')
             } catch (error) {
                   Logger.error(error)
-                  return response.expectationFailed({ status: false, data: null, message: error.message })
+                  return response.expectationFailed({ status: false, message: error.message })
             }
       }
 
@@ -128,7 +129,7 @@ export default class UsersController extends UserValidator {
             const payload = await request.validate({ schema: this.v_profile })
             try {
                   if (payload) {
-                        const result = await upload.uploads(payload.profile)
+                        const result = await upload.single(payload.profile)
                         const profile = result.secure_url
                         await this.user.update(auth.use('user').user!.id, { profile })
                         return response.created({ status: true, data: { profile } })

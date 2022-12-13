@@ -33,7 +33,7 @@ export default class TypeService {
       }
 
       /**
-       * Appartement
+       * Bien
        */
 
       public async findBienType(params: i.IFindByKeyValue): Promise<TypeAppartement | null> {
@@ -45,7 +45,7 @@ export default class TypeService {
        * @param params - i.IQuerry
        * @returns An array of Role objects or null.
        */
-      public async getBienType(params: i.IQuerry): Promise<TypeAppartement[] | null> {
+      public async getBienType(params: i.IQuerry): Promise<Typebien[] | null> {
             return this.bien
                   .query()
                   .orderBy(params.orderBy, 'desc')

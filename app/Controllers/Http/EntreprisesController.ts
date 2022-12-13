@@ -72,7 +72,7 @@ export default class EntreprisesController extends EntrepriseValidator {
             const { id } = await request.validate({ schema: this.v_delete, data: { id: request.param('id') } })
             try {
                   if (payload) {
-                        const result = await upload.uploads(payload.logo)
+                        const result = await upload.single(payload.logo)
                         const logo = result.secure_url
                         await this.enreprise.update(id, { logo })
                         return response.created({ status: true, data: { logo } })

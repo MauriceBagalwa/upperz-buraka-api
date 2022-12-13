@@ -5,6 +5,12 @@
     security:
       - bearerAuth: []
     description: create a new address for entreprise.
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+
     requestBody:
       required: true
       content:

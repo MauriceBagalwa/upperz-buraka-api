@@ -34,7 +34,7 @@ export default class TypeBiensController extends TypeBienValidator {
                   if (await this.service.findBienType({ key: "designation", value: payload.designation.toLocaleLowerCase() }))
                         return response.conflict({ status: false, message: 'Bien already exists.' })
                   //3
-                  const result = await this.service.registreAppartType(payload)
+                  const result = await this.service.registreBienType(payload)
                   response.created({ ststus: true, data: result })
             } catch (error) {
                   Logger.error(`Error : ${error.message}`)

@@ -19,10 +19,11 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import "./routes/user"
+import "./routes/appartement"
 import "./routes/entreprise"
 import "./routes/type"
+import "./routes/user"
 
 Route.get('/', async () => {
-  return { hello: 'world' }
+  return { hello: 'Welcome to the party 🚀' }
 })
