@@ -1,9 +1,10 @@
-import { BaseModel, beforeSave, BelongsTo, belongsTo, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeSave, BelongsTo, belongsTo, column, HasMany, hasMany, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
 import ImageAppartement from './ImageAppartement'
 import TypeAppartement from './TypeAppartement'
 import generate from 'App/Utils/Generator'
 import TypeBien from './TypeBien'
 import { DateTime } from 'luxon'
+import AppartementAddress from './AppartementAddress'
 
 export default class Appartement extends BaseModel {
   @column({ isPrimary: true })
@@ -25,9 +26,6 @@ export default class Appartement extends BaseModel {
   public features: string
 
   @column()
-  public address: string
-
-  @column()
   public status: boolean
 
   @column.dateTime({ autoCreate: true })
@@ -44,6 +42,9 @@ export default class Appartement extends BaseModel {
 
   @hasMany(() => ImageAppartement, {})
   public images: HasMany<typeof ImageAppartement>
+
+  @hasOne(() => AppartementAddress, {})
+  public address: HasOne<typeof AppartementAddress>
 
   @belongsTo(() => TypeAppartement, {})
   public typeAppartement: BelongsTo<typeof TypeAppartement>

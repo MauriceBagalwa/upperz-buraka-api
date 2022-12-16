@@ -1,3 +1,4 @@
+import AppartementAddress from "App/Models/AppartementAddress";
 import Appartement from "App/Models/Appartement";
 import Images from "App/Models/ImageAppartement";
 import i from "interface"
@@ -6,10 +7,13 @@ export default class AppartementService {
 
       private model = Appartement
       private img = Images
+      private address = AppartementAddress;
 
       public async find(param: i.IFindByKeyValue): Promise<Appartement | null> {
             return await this.model.query().where(param.key, param.value as string)
-                  .preload("images").first()
+                  .preload("address")
+                  .preload("images")
+                  .first()
       }
 
       public async findAll(params: i.IQAppartement): Promise<Appartement[]> {
@@ -26,6 +30,7 @@ export default class AppartementService {
                   .preload("typeAppartement", (query) => {
                         query.select(['id', 'designation', 'description'])
                   })
+                  .preload("address")
                   .preload("images")
                   .paginate(params.page, params.limit)
       }
@@ -46,9 +51,8 @@ export default class AppartementService {
       /**
        *  Images
        */
-
-      public async findImg(param: i.IFindByKeyValue): Promise<Images | null> {
-            return await this.img.query().where(param.key, param.value as string).first()
+      public async findImg(id: string): Promise<Images | null> {
+            return await this.img.findBy('id', id)
       }
 
       public async registreImg(input: i.IAppartementImage[]): Promise<Images[]> {
@@ -57,5 +61,21 @@ export default class AppartementService {
 
       public async destroyImg(id: string): Promise<Images> {
             return await this.img.query().where('id', id).delete().first()
+      }
+
+      /**
+       * Adresses
+       */
+      public async addresse(params: i.IFindByKeyValue): Promise<AppartementAddress | null> {
+            return this.address.query().where(params.key, params.value as string).first()
+      }
+
+      public async registreAddress(input: i.IAppartAddress): Promise<AppartementAddress> {
+            return this.address.create(input)
+      }
+
+      public async updateAddress(id: string, input: i.IAppartAddress): Promise<AppartementAddress | null> {
+            await this.address.query().where('appartement_id', id).update(input).first()
+            return this.address.findBy('appartement_id', id)
       }
 }

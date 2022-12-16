@@ -52,6 +52,34 @@ export default class UsersController extends UserValidator {
        * @param {HttpContextContract}  - 1. The request object is used to validate the request.
        * @returns The url of the uploaded image.
        */
+      public async multiple({ request, response }: HttpContextContract) {
+            //1
+            const profiles = await request.files('profile', {
+                  extnames: ['jpg', 'png', 'gif', 'jpeg'],
+                  size: '2mb',
+            })
+
+            try {
+                  //2
+                  var imageUrlList: string[] = [];
+                  for (var i = 0; i < profiles.length; i++) {
+                        if (profiles[i]) {
+                              var reslt = await upload.single(profiles[i])
+                              imageUrlList.push(reslt.url)
+                        }
+                  }
+
+                  return response.ok({
+                        status: true,
+                        data: { url: imageUrlList },
+                        message: 'Profile Upload.',
+                  })
+
+            } catch (error) {
+                  Logger.error(error)
+                  return response.expectationFailed({ status: false, message: error.message })
+            }
+      }
       public async profile({ request, response }: HttpContextContract) {
             //1
             const { profile } = await request.validate({ schema: this.v_profile })
@@ -96,18 +124,23 @@ export default class UsersController extends UserValidator {
             }
       }
 
+
       /**
-       * A login function that validates the user's email and password.
-       * @param {HttpContextContract}  - HttpContextContract - This is the context of the request. It
-       * contains the request, response, and auth objects.
+       * 1. Validate the request body using the schema defined in the `v_sign` property.
+       * 2. Attempt to login the user using the `user` guard
+       * @param {HttpContextContract}  - 1. The request object is used to validate the request body.
        * @returns The token and the user data
        */
       public async login({ request, response, auth }: HttpContextContract) {
+            //1
+            Logger.info(`${JSON.stringify(`${JSON.stringify(request.body())}`)}`)
+
             const { email, password } = await request.validate({
                   schema: this.v_sign,
             })
 
             try {
+                  //2
                   const token = await auth.use('user').attempt(email, password)
                   const user = await this.user.signin(email)
 

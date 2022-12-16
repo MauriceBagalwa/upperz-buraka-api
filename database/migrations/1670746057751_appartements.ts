@@ -11,7 +11,6 @@ export default class extends BaseSchema {
       table.integer('number').notNullable().defaultTo(0)
       table.string('description').notNullable()
       table.string('features').notNullable()
-      table.string('address').notNullable()
       table.boolean('status').defaultTo(false)
 
       /**

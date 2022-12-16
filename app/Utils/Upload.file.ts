@@ -1,7 +1,7 @@
+import { MultipartFileContract } from '@ioc:Adonis/Core/BodyParser'
 import cloudinary from 'cloudinary'
-// import cloudinary from '@ioc:Adonis/Addons/'
 import fs from 'fs'
-// import { resolve } from 'path'
+import i from 'interface'
 
 export default class uploadFile {
 
@@ -31,7 +31,8 @@ export default class uploadFile {
     // await cloudinary.upload(this.getFilePath(file))
     return await cloudinary.v2.uploader.upload(this.getFilePath(file))
   }
-  public static async uploads(files: any[]) {
+
+  public static async multiple(files: MultipartFileContract[]): Promise<i.IAppartementImage[]> {
 
 
     cloudinary.v2.config({
@@ -41,33 +42,22 @@ export default class uploadFile {
     })
 
 
-    let file: string
-    let multiImage = files.map(async (img) => {
-      file = `${fs.createReadStream(img.tmpPath!).path}`
-      await new Promise(async () => {
-        cloudinary.v2.uploader.upload(file)
-      })
+    var imagesPahs: string[] = []
+
+    files.map(async (img) => {
+      imagesPahs.push(`${fs.createReadStream(img.tmpPath!).path}`)
     })
 
-    // let fileArray: any[] = []
-    let imageResponse = await Promise.all(multiImage);
+    var imageUrlList: Array<i.IAppartementImage> = [];
+    for (var i = 0; i < imagesPahs.length; i++) {
+      // if (imagesPahs[i]) {
 
+      var reslt = await cloudinary.v2.uploader.upload(imagesPahs[i])
+      imageUrlList.push({ url: reslt.url })
+      // }
+    }
 
-    // const imagesUrl = imageResponse.map((image) => {
-    //   fileArray.push(image)
-    //   //   const url = image;
-    //   // return { url };
-    // });
-
-    // let rslt: cloudinary.UploadApiResponse;
-
-    // files.forEach(async (v) => {
-
-    //   // fileArray.push(file)
-    //   const t = 
-
-    //   // rslt = )
-    // })
-    return imageResponse
+    return imageUrlList
+    // return imagesPahs
   }
 }

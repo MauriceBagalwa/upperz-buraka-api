@@ -13,7 +13,10 @@ export default class EntrepriseService {
       }
 
       public async find(params: i.IFindByKeyValue): Promise<Entreprise | null> {
-            return this.model.query().where(params.key, params.value as string).preload('addresses').preload('banks').first()
+            return this.model.query().where(params.key, params.value as string)
+            .preload('addresses')
+            .preload('banks')
+            .first()
       }
 
       public async registre(input: i.IEntreprise): Promise<Entreprise> {

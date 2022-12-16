@@ -56,6 +56,16 @@ export interface IAddress {
       number: number
 }
 
+export interface IAppartAddress {
+      appartement_id?: string
+      country: string
+      town: string
+      city: string
+      quarter: string
+      street: string
+      number: number
+}
+
 export interface IBankAcount {
       entreprise_id?: string
       bank: string
@@ -77,11 +87,15 @@ export interface IAppartement {
       typeAppartementId: string
       description: string
       features: string
-      address: string
       number?: number
 }
 
 export interface IAppartementImage {
-      appartement_id: string
+      appartement_id?: string
+      url: string
+}
+
+export interface IImage {
+
       url: string
 }
