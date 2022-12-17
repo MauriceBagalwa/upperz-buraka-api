@@ -99,3 +99,30 @@ export interface IImage {
 
       url: string
 }
+
+/**
+ * Personnes
+ */
+
+export interface IPersonne {
+      name: string,
+      lastname: string,
+      email: string
+      profile?: string
+      cardType: string
+      cardTypeId: string
+}
+
+export interface IUpdatePersonne {
+      name: string,
+      latsname: string,
+      email: string
+      cardType: string
+      cardTypeId: string
+}
+
+export interface IPhone {
+      personnes_id?: string,
+      country_code: string,
+      number: string
+}

@@ -23,6 +23,7 @@ import "./routes/appartement"
 import "./routes/entreprise"
 import "./routes/type"
 import "./routes/user"
+import "./routes/personne"
 
 Route.get('/', async () => {
   return { hello: 'Welcome to the party 🚀' }

@@ -14,8 +14,8 @@ export default class extends BaseSchema {
       table
         .string('profile')
         .defaultTo('https://cdn3.iconfinder.com/data/icons/web-and-networking-4/128/45-512.png')
-      table.enum('piece_of_identification', Object.values(TID)).notNullable()
-      table.string('identification_part_number').notNullable()
+      table.enum('card_type', Object.values(TID)).notNullable()
+      table.string('card_type_id').notNullable().unique()
       table.boolean('status').defaultTo(true)
 
       /**
