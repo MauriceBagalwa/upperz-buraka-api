@@ -135,6 +135,28 @@ export default class PersonnesController extends PersonneValidator {
                   return response.expectationFailed({ status: false, data: null, message: error.message })
             }
       }
+      public async selectRunningPhone({ request, response }: HttpContextContract) {
+            const { id } = await request.validate({
+                  schema: this.v_delete,
+                  data: { id: request.param('id') }
+            })
+
+            // const prayload = await request.validate({ schema: this.v_phone })
+            try {
+                  const phoneFind = await this.personne.findPhone({ key: 'id', value: id })
+                  if (!phoneFind)
+                        return response.notFound({ status: false, message: 'Phone no found.' })
+
+                  await this.personne.updatePhoneDefault(phoneFind.personneId)
+                  await this.personne.updatePhone(id, { running: true })
+                  return response.created({
+                        status: true, message: 'Phone updated.'
+                  })
+            } catch (error: any) {
+                  Logger.error(error.message)
+                  return response.expectationFailed({ status: false, data: null, message: error.message })
+            }
+      }
 
       public async deletePhone({ request, response }: HttpContextContract) {
             const { id } = await request.validate({

@@ -11,6 +11,17 @@ export default class EntreprisesController extends EntrepriseValidator {
             super()
       }
 
+      public async index({ response }: HttpContextContract) {
+            // const { id } = await request.validate({ schema: this.v_delete, data: { id: request.param('id') } })
+            try {
+                  const data = await this.enreprise.getAll()
+                  return response.ok({ status: true, data })
+            } catch (error: any) {
+                  Logger.error(error.message)
+                  return response.expectationFailed({ status: false, data: null, message: error.message })
+            }
+      }
+
       public async show({ request, response }: HttpContextContract) {
             const { id } = await request.validate({ schema: this.v_delete, data: { id: request.param('id') } })
             try {

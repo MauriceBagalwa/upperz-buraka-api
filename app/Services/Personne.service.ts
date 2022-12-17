@@ -41,8 +41,11 @@ export default class PersonneService {
             return await this.phone.createMany(input)
       }
 
-      public async updatePhone(id: string, input: i.IPhone): Promise<Phones> {
+      public async updatePhone(id: string, input: i.IPhone | i.IPhoneRunning): Promise<Phones> {
             return await this.phone.query().where('id', id).update(input).first()
+      }
+      public async updatePhoneDefault(id: string): Promise<Phones[]> {
+            return await this.phone.query().where('personne_id', id).update({ running: false })
       }
 
       public async deletePhone(id: string): Promise<Phones> {

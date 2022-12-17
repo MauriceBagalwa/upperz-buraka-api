@@ -126,3 +126,7 @@ export interface IPhone {
       country_code: string,
       number: string
 }
+
+export interface IPhoneRunning {
+      running: boolean
+}
