@@ -88,6 +88,7 @@ export interface IAppartement {
       description: string
       features: string
       number?: number
+      price: number
 }
 
 export interface IAppartementImage {
@@ -129,4 +130,38 @@ export interface IPhone {
 
 export interface IPhoneRunning {
       running: boolean
+}
+/**
+ * Rental Location
+ */
+export interface IRentalQuerry extends IQuerry {
+      user?: string
+      personne?: string
+      appartement?: string
+      startDate?: DateTime
+      endDate?: DateTime
+}
+
+export interface IRental {
+      appartementId: string
+      personneId: string
+      amount: number
+      userId?: string
+}
+
+export interface IGuarantee {
+      rentalLocationId: string
+      month: number
+      amount: number
+}
+
+export interface IGuaranteeQuerry extends IQuerry {
+      rentalLocation?: string
+      month?: string
+      amount?: string
+}
+
+export interface IBreakContrat {
+      appartementId: string
+      perssonneId: string
 }

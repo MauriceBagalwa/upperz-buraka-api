@@ -86,7 +86,6 @@ export default class AppartementsController extends AppartementValidator {
                   const typeAppart = await this.type.findBienType({ key: 'id', value: payload.typeBienId })
                   if (typeAppart?.designation === EBienType.APPARTEMENT && !payload.number)
                         return response.notAcceptable({ status: false, message: 'Appartement number is required' })
-
                   else
                         payload.number = 0
                   //4

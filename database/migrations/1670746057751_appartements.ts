@@ -12,6 +12,7 @@ export default class extends BaseSchema {
       table.string('description').notNullable()
       table.string('features').notNullable()
       table.boolean('status').defaultTo(false)
+      table.integer('price').notNullable()
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

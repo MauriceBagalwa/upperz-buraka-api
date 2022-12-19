@@ -8,9 +8,11 @@ export default class AppartementService {
       private model = Appartement
       private img = Images
       private address = AppartementAddress;
+      private static _instance: AppartementService
 
       public async find(param: i.IFindByKeyValue): Promise<Appartement | null> {
-            return await this.model.query().where(param.key, param.value as string)
+            return await this.model.query()
+                  .where(param.key, param.value as string)
                   .preload("address")
                   .preload("images")
                   .first()
@@ -77,5 +79,9 @@ export default class AppartementService {
       public async updateAddress(id: string, input: i.IAppartAddress): Promise<AppartementAddress | null> {
             await this.address.query().where('appartement_id', id).update(input).first()
             return this.address.findBy('appartement_id', id)
+      }
+
+      public static get Instance() {
+            return this._instance || (this._instance = new this())
       }
 }

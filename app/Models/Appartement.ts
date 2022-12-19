@@ -26,6 +26,9 @@ export default class Appartement extends BaseModel {
   public features: string
 
   @column()
+  public price: number
+
+  @column()
   public status: boolean
 
   @column.dateTime({ autoCreate: true })

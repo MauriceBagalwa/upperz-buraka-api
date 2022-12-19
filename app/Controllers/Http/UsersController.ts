@@ -114,8 +114,8 @@ export default class UsersController extends UserValidator {
                   schema: this.v_create
             })
             try {
-                  if (await this.user.exist())
-                        return response.notFound({ status: false, message: 'Operation faild.' })
+                  // if (await this.user.exist())
+                  //       return response.notFound({ status: false, message: 'Operation faild.' })
                   const result = await this.user.registre(payload)
                   response.created({ status: true, data: result })
             } catch (error) {
@@ -133,18 +133,21 @@ export default class UsersController extends UserValidator {
        */
       public async login({ request, response, auth }: HttpContextContract) {
             //1
-            Logger.info(`${JSON.stringify(`${JSON.stringify(request.body())}`)}`)
-
+            // Logger.info(`${JSON.stringify(`${JSON.stringify(request.body())}`)}`)
             const { email, password } = await request.validate({
                   schema: this.v_sign,
             })
 
             try {
                   //2
-                  const token = await auth.use('user').attempt(email, password)
-                  const user = await this.user.signin(email)
-
-                  return response.ok({ status: true, token, data: user })
+                  const userFind = await this.user.signin(email)
+                  if (!userFind || !userFind.status) return response.notFound({ status: false, message: 'Identifiants inccorect' })
+                  //3
+                  if (!(await Hash.verify(userFind.password, password)))
+                        return response.notFound({ status: false, message: 'Identifiants inccorect.' })
+                  //4
+                  const token = await auth.use('user').generate(userFind)
+                  return response.created({ status: true, token, data: userFind })
             } catch (error) {
                   Logger.error(error)
                   return response.expectationFailed({ status: false, message: error.message })

@@ -9,6 +9,7 @@ export default class AppartementValidator extends GeneralCaseValidator {
     description: schema.string({ trim: true }, [rules.minLength(8), rules.maxLength(250)]),
     features: schema.string({ trim: true }, [rules.minLength(8), rules.maxLength(250)]),
     number: schema.number.optional([rules.range(1, 100)]),
+    price: schema.number([rules.range(30, 5000)]),
   })
 
   /**
