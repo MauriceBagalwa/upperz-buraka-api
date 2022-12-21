@@ -5,10 +5,11 @@ import Logger from '@ioc:Adonis/Core/Logger'
 import upload from 'App/Utils/Upload.file'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { inject } from '@adonisjs/fold'
+import TypeService from 'App/Services/Typebien.service'
 
 @inject()
 export default class UsersController extends UserValidator {
-      constructor(private readonly user: UserService) {
+      constructor(private readonly user: UserService, private bien: TypeService) {
             super()
       }
 
@@ -147,7 +148,12 @@ export default class UsersController extends UserValidator {
                         return response.notFound({ status: false, message: 'Identifiants inccorect.' })
                   //4
                   const token = await auth.use('user').generate(userFind)
-                  return response.created({ status: true, token, data: userFind })
+                  const config = {
+                        typeBiens: await this.bien.getBienType(),
+                        typeAppart: await this.bien.getAppartType(),
+
+                  }
+                  return response.created({ status: true, token, data: { user: userFind, config } })
             } catch (error) {
                   Logger.error(error)
                   return response.expectationFailed({ status: false, message: error.message })

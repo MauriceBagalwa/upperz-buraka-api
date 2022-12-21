@@ -17,11 +17,12 @@ export default class TypeService {
        * @param params - i.IQuerry
        * @returns An array of Role objects or null.
        */
-      public async getAllAppartType(params: i.IQuerry): Promise<TypeAppartement[] | null> {
+      public async getAppartType(): Promise<TypeAppartement[] | null> {
             return this.appartement
                   .query()
-                  .orderBy(params.orderBy, 'desc')
-                  .paginate(params.page, params.limit)
+                  .select(['id', 'designation', 'description'])
+                  .orderBy('createdAt', 'desc')
+            // .paginate(params.page, params.limit)
       }
 
       public async registreAppartType(input: i.ISimpleRegistre): Promise<TypeAppartement> {
@@ -45,11 +46,12 @@ export default class TypeService {
        * @param params - i.IQuerry
        * @returns An array of Role objects or null.
        */
-      public async getBienType(params: i.IQuerry): Promise<Typebien[] | null> {
+      public async getBienType(): Promise<Typebien[] | null> {
             return this.bien
                   .query()
-                  .orderBy(params.orderBy, 'desc')
-                  .paginate(params.page, params.limit)
+                  .select(['id', 'designation', 'description'])
+                  .orderBy('createdAt', 'desc')
+            // .paginate(params.page, params.limit)
       }
 
       public async registreBienType(input: i.ISimpleRegistre): Promise<TypeAppartement> {
