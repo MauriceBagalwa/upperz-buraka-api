@@ -11,11 +11,11 @@ export default class TypeAppartementsController extends TypeAppartementValidator
             super()
       }
 
-      public async index({ request, response }: HttpContextContract) {
+      public async index({ response }: HttpContextContract) {
             try {
-                  const { page = 1, limit = 100, orderBy = "created_at" } = request.qs()
-                  const data = await this.service.getAllAppartType({ page, limit, orderBy })
-                  response.ok({ status: true, data })
+                  // const { page = 1, limit = 100, orderBy = "created_at" } = request.qs()
+                  // const data = await this.service.getAppartType()
+                  // response.ok({ status: true, data })
             } catch (error) {
                   Logger.error(`Error : ${error.message}`)
                   response.expectationFailed({ status: false, message: error.message })

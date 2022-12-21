@@ -27,5 +27,5 @@ import "./routes/personne"
 import "./routes/location"
 
 Route.get('/', async () => {
-  return { hello: 'Welcome to the party 🚀' }
+  return { hello: 'Welcome to the party of yakuza 🚀' }
 })
