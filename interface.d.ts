@@ -1,3 +1,4 @@
+import { MARTITAL_STATUS, TYPE_LANDLORD } from 'App/Models/Landlord'
 import TypeAppartement from "App/Models/TypeAppartement"
 
 /*
@@ -97,34 +98,44 @@ export interface IAppartementImage {
 }
 
 export interface IImage {
-
       url: string
 }
 
 /**
- * Personnes
+ * landlord
  */
 
-export interface IPersonne {
+export interface ILandlord {
       name: string,
       lastname: string,
       email: string
       profile?: string
       cardType: string
-      cardTypeId: string
+      cardTypeId: string,
+      maritalStatus: MARTITAL_STATUS,
+      nationality: string,
+      lastAdress: string,
+      landlordType: TYPE_LANDLORD,
 }
 
-export interface IUpdatePersonne {
+export interface ILandlordQuerry extends IQuerry {
+      maritalStatus: MARTITAL_STATUS,
+      landlordType: TYPE_LANDLORD,
+}
+export interface IUpdateLandlord {
       name: string,
       latsname: string,
-      email: string
-      cardType: string
-      cardTypeId: string
+      email: string,
+      cardType: string,
+      cardTypeId: string,
+      maritalStatus: MARTITAL_STATUS,
+      nationality: string,
+      lastAdress: string
 }
 
 export interface IPhone {
-      personnes_id?: string,
-      country_code: string,
+      landlordId?: string,
+      countryCode: string,
       number: string
 }
 
@@ -135,33 +146,33 @@ export interface IPhoneRunning {
  * Rental Location
  */
 export interface IRentalQuerry extends IQuerry {
-      user?: string
-      personne?: string
-      appartement?: string
-      startDate?: DateTime
-      endDate?: DateTime
+      user: string
+      landlord: string
+      appartement: string
+      startDate: DateTime
+      endDate: DateTime
 }
 
 export interface IRental {
       appartementId: string
-      personneId: string
+      landlordId: string
       amount: number
       userId?: string
 }
 
 export interface IGuarantee {
-      rentalLocationId: string
+      rentalContratId: string
       month: number
       amount: number
 }
 
 export interface IGuaranteeQuerry extends IQuerry {
-      rentalLocation?: string
-      month?: string
-      amount?: string
+      rentalContrat: string
+      month: string
+      // amount?: string
 }
 
 export interface IBreakContrat {
       appartementId: string
-      perssonneId: string
+      landlordId: string
 }

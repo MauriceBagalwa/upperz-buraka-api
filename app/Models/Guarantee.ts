@@ -1,13 +1,13 @@
-import { DateTime } from 'luxon'
 import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
 import generate from "App/Utils/Generator"
+import { DateTime } from 'luxon'
 
 export default class Guarantee extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
   @column()
-  public rentalLocationId: string
+  public rentalContratId: string
 
   @column()
   public month: number
@@ -25,8 +25,8 @@ export default class Guarantee extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword(model: Guarantee) {
+  public static async generateID(model: Guarantee) {
     model.id = await generate.id()
   }
-  
+
 }

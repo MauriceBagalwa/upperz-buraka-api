@@ -6,7 +6,7 @@ export default class extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().notNullable()
-      table.uuid('rental_location_id').references('rental_locations.id').notNullable().onDelete('CASCADE')
+      table.uuid('rental_contrat_id').references('rental_contrats.id').notNullable().onDelete('CASCADE')
       table.integer('month').notNullable()
       table.float('amount').notNullable()
       table.string('currency', 4).defaultTo('USD')

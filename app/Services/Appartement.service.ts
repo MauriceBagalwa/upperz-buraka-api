@@ -34,6 +34,7 @@ export default class AppartementService {
                   })
                   .preload("address")
                   .preload("images")
+                  .orderBy('created_at', 'desc')
                   .paginate(params.page, params.limit)
       }
 

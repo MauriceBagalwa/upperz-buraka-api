@@ -198,4 +198,5 @@ export default class AppartementsController extends AppartementValidator {
                   return response.expectationFailed({ status: false, data: null, message: error.message })
             }
       }
+
 }

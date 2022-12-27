@@ -2,11 +2,11 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
       Route.group(() => {
-            Route.resource('personnes', 'PersonnesController')
-            Route.post('personnes/phones/:id', 'PersonnesController.addPhone')
-            Route.put('personnes/phones/:id', 'PersonnesController.updatePhone')
-            Route.put('personnes/phones/running/:id', 'PersonnesController.selectRunningPhone')
-            Route.delete('personnes/phones/:id', 'PersonnesController.deletePhone')
+            Route.resource('landlords', 'LandlordsController')
+            Route.post('landlords/phones/:id', 'LandlordsController.addPhone')
+            Route.put('landlords/phones/:id', 'LandlordsController.updatePhone')
+            Route.put('landlords/phones/running/:id', 'LandlordsController.selectRunningPhone')
+            Route.delete('landlords/phones/:id', 'LandlordsController.deletePhone')
       }).middleware('auth:user')
 
 

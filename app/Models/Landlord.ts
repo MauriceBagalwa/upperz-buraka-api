@@ -1,7 +1,7 @@
 import { BaseModel, HasMany, beforeSave, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
-import { DateTime } from 'luxon'
+import PersonnePhone from './LandlordPhone'
 import generate from "App/Utils/Generator"
-import PersonnePhone from './PersonnePhone'
+import { DateTime } from 'luxon'
 
 export enum TID {
   VOTERS_CARD = "carte electeur",
@@ -9,7 +9,17 @@ export enum TID {
   PERMIS = `permis`,
 }
 
-export default class Personne extends BaseModel {
+export enum MARTITAL_STATUS {
+  MARRIED = "married",
+  SINGLE = `single`
+}
+
+export enum TYPE_LANDLORD {
+  PERSONNE_PHYSIQUE = "personne physique",
+  ENTREPRISE = `entreprise`
+}
+
+export default class Landlord extends BaseModel {
 
   @column({ isPrimary: true })
   public id: string
@@ -36,6 +46,18 @@ export default class Personne extends BaseModel {
   public cardTypeId: string
 
   @column()
+  public maritalStatus: string
+
+  @column()
+  public nationality: string
+
+  @column()
+  public lastAdress: string
+
+  @column()
+  public landlordType: string
+
+  @column()
   public status: boolean
 
   @column.dateTime({ autoCreate: true })
@@ -45,7 +67,7 @@ export default class Personne extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword(model: Personne) {
+  public static async hashPassword(model: Landlord) {
     model.id = await generate.id()
   }
 

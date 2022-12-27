@@ -1,4 +1,4 @@
-import RentalLocation from "App/Models/RentalLocation"
+import RentalLocation from "App/Models/RentalContrat"
 import Guarantee from "App/Models/Guarantee"
 import i from "interface"
 
@@ -15,13 +15,25 @@ export default class LocationService {
 
       public async getRentals(params: i.IRentalQuerry): Promise<RentalLocation[]> {
             return await this.rental.query()
+                  .if(params.user, (query) => {
+                        query.where('user_id', params.user)
+                  })
+                  .if(params.appartement, (query) => {
+                        query.where('appartement_id', params.appartement)
+                  })
+                  .if(params.landlord, (query) => {
+                        query.where('landlord_id', params.landlord)
+                  })
+                  .if(params.status, (query) => {
+                        query.where('status', params.status as boolean)
+                  })
                   .preload('user', (query) => {
                         query.select(['id', 'name', 'lastname', 'country_code', 'phone_number', 'email', 'profile'])
                   })
                   .preload('landlord', (query) => {
                         query.select(['id', 'name', 'lastname', 'email', 'profile'])
                   })
-                  .preload('appatement', (query) => {
+                  .preload('appartement', (query) => {
                         query.select(['id', 'type_bien_id', 'type_appartement_id', 'number', 'description', 'features']).preload("typeBien", (query) => {
                               query.select(['id', 'designation', 'description'])
                         }).preload("typeAppartement", (query) => {
@@ -48,7 +60,7 @@ export default class LocationService {
       }
 
       public async break(params: i.IBreakContrat, input: object): Promise<RentalLocation[]> {
-            return await this.rental.query().where('appartement_id', params.appartementId).where('personne_id', params.perssonneId).update(input)
+            return await this.rental.query().where('appartement_id', params.appartementId).where('personne_id', params.landlordId).update(input)
       }
 
       public async delete(id: string): Promise<RentalLocation> {
@@ -60,7 +72,15 @@ export default class LocationService {
        */
 
       public async getGuarantee(params: i.IGuaranteeQuerry): Promise<Guarantee[]> {
-            return await this.guarantee.query().orderBy(params.orderBy, 'desc').paginate(params.page, params.limit)
+            return await this.guarantee.query()
+                  .if(params.rentalContrat, (query) => {
+                        query.where('rental_contrat_id', params.rentalContrat)
+                  })
+                  .if(params.month, (query) => {
+                        query.where('month', params.month)
+                  })
+                  .orderBy(params.orderBy, 'desc')
+                  .paginate(params.page, params.limit)
       }
 
       public async findGuarantee(params: i.IFindByKeyValue): Promise<Guarantee | null> {

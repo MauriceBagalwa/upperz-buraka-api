@@ -8,8 +8,9 @@ export default class RentalLocationValidator extends GeneralCaseValidator {
 
   public v_create = schema.create({
     appartementId: schema.string(),
-    personneId: schema.string([rules.exists({ table: 'personnes', column: 'id' })]),
+    landlordId: schema.string([rules.exists({ table: 'landlords', column: 'id' })]),
     amount: schema.number(),
+    numberOfHabitant: schema.number(),
     userId: schema.string.optional([rules.exists({ table: 'users', column: 'id' })]),
     // month: schema.number([rules.range(2, 6)])
   })
@@ -22,7 +23,7 @@ export default class RentalLocationValidator extends GeneralCaseValidator {
   // })
 
   public v_break = schema.create({
-    personneId: schema.string([rules.exists({ table: 'personnes', column: 'id' })]),
+    landlordId: schema.string([rules.exists({ table: 'personnes', column: 'id' })]),
   })
 
   public v_guarantee = schema.create({

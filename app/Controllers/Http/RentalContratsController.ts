@@ -7,15 +7,15 @@ import { inject } from "@adonisjs/fold";
 import AppartementService from "App/Services/Appartement.service";
 
 @inject()
-export default class RentalLocationsController extends RentalLocationValidator {
+export default class RentalContratsController extends RentalLocationValidator {
       constructor(private location: LocationService, private appart: AppartementService) {
             super()
       }
 
       public async index({ request, response }: HttpContextContract) {
             try {
-                  const { page = 1, limit = 100, orderBy = "created_at", appartement, personne, status, startDate, endDate, user } = request.qs()
-                  const data = await this.location.getRentals({ page, limit, orderBy, appartement, personne, status, startDate, endDate, user })
+                  const { page = 1, limit = 100, orderBy = "created_at", appartement, landlord, status, startDate, endDate, user } = request.qs()
+                  const data = await this.location.getRentals({ page, limit, orderBy, appartement, landlord, status, startDate, endDate, user })
                   response.ok({ status: true, data })
             } catch (error) {
                   Logger.error(error.message)
@@ -30,7 +30,7 @@ export default class RentalLocationsController extends RentalLocationValidator {
                   //2
                   const rentalFind = await this.location.find({ key: 'id', value: id })
                   if (!rentalFind)
-                        return response.notFound({ status: false, message: 'Rental Location no found.' })
+                        return response.notFound({ status: false, message: 'Rental contrat no found.' })
                   //3
                   response.ok({ status: true, data: rentalFind })
             } catch (error) {
@@ -69,7 +69,7 @@ export default class RentalLocationsController extends RentalLocationValidator {
                   //2
                   const appartFind = await this.location.find({ key: 'id', value: id })
                   if (!appartFind)
-                        return response.notFound({ status: false, message: 'Rental Location no found.' })
+                        return response.notFound({ status: false, message: 'Rental contrat no found.' })
                   await this.location.delete(id)
                   response.created({ status: true, message: 'Rental deleted.' })
             } catch (error) {
@@ -86,21 +86,21 @@ export default class RentalLocationsController extends RentalLocationValidator {
                   //2
                   const rentalFind = await this.location.find({ key: 'id', value: id })
                   if (!rentalFind || !rentalFind.status)
-                        return response.notFound({ status: false, message: 'Rental Location no found.' })
+                        return response.notFound({ status: false, message: 'Rental contrat no found.' })
                   //3
-                  if (rentalFind.personneId !== prayload.personneId)
+                  if (rentalFind.landlordId !== prayload.landlordId)
                         return response.unauthorized({ status: false, message: 'unauthorized perssone.' })
                   //4
                   const rentalCurrenty = await this.location.find({ key: 'appartement_id', value: rentalFind.appartementId }, true)
                   if (!rentalCurrenty)
-                        return response.notFound({ status: false, message: 'Rental Location current no found.' })
+                        return response.notFound({ status: false, message: 'Rental contrat current no found.' })
                   //5
-                  await this.location.break({ appartementId: rentalFind.appartementId, perssonneId: prayload.personneId }, { status: false, current: false })
+                  await this.location.break({ appartementId: rentalFind.appartementId, landlordId: prayload.landlordId }, { status: false, current: false })
                   //6
                   await this.location.update(rentalCurrenty.id, { end_date: new Date() })
                   //7
                   await this.appart.update(rentalFind.appartementId, { status: false })
-                  response.created({ status: true, message: 'Rental Location break.' })
+                  response.created({ status: true, message: 'Rental contrat break.' })
             } catch (error) {
                   Logger.error(error.message)
                   return response.expectationFailed({ status: false, message: error.message })
@@ -112,9 +112,9 @@ export default class RentalLocationsController extends RentalLocationValidator {
        */
       public async indexGuarantee({ request, response }: HttpContextContract) {
             try {
-                  const { page = 1, limit = 100, orderBy = "created_at", amount, month, status, rentalLocation } = request.qs()
+                  const { page = 1, limit = 100, orderBy = "created_at", month, status, rentalContrat } = request.qs()
 
-                  const data = await this.location.getGuarantee({ page, limit, orderBy, status, amount, month, rentalLocation })
+                  const data = await this.location.getGuarantee({ page, limit, orderBy, status, month, rentalContrat })
                   response.ok({ status: true, data })
             } catch (error) {
                   Logger.error(error.message)

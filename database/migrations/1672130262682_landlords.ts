@@ -1,8 +1,7 @@
+import { MARTITAL_STATUS, TID, TYPE_LANDLORD } from "App/Models/Landlord"
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
-import { TID } from "App/Models/Personne"
-
 export default class extends BaseSchema {
-  protected tableName = 'personnes'
+  protected tableName = 'landlords'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
@@ -16,6 +15,11 @@ export default class extends BaseSchema {
         .defaultTo('https://cdn3.iconfinder.com/data/icons/web-and-networking-4/128/45-512.png')
       table.enum('card_type', Object.values(TID)).notNullable()
       table.string('card_type_id').notNullable().unique()
+      table.enum('marital_status', Object.values(MARTITAL_STATUS))
+      table.enum('landlord_type', Object.values(TYPE_LANDLORD))
+
+      table.string('nationality').notNullable()
+      table.string('last_adress').notNullable()
       table.boolean('status').defaultTo(true)
 
       /**

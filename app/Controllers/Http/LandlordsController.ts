@@ -1,19 +1,20 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import PersonneValidator from 'App/Validators/PersonneValidator'
-import Service from "App/Services/Personne.service"
+import LandlordValidator from 'App/Validators/LandlordValidator'
+import Service from 'App/Services/Landlord.service'
 import Logger from '@ioc:Adonis/Core/Logger'
 import { inject } from '@adonisjs/fold'
 
 @inject()
-export default class PersonnesController extends PersonneValidator {
-      constructor(private personne: Service) {
+export default class LandlordsController extends LandlordValidator {
+      constructor(private landlord: Service) {
             super()
       }
-
       public async index({ request, response }: HttpContextContract) {
             try {
-                  const { page = 1, limit = 100, status = true, orderBy = "created_at" } = request.qs()
-                  const data = await this.personne.getAll({ page, limit, status, orderBy })
+                  const { page = 1, limit = 100, status = true, landlordType, maritalStatus, orderBy = "created_at" } = request.qs()
+
+                  const data = await this.landlord.getAll({ page, limit, status, orderBy, landlordType, maritalStatus })
+
                   return response.ok({ status: true, data })
             } catch (error: any) {
                   Logger.error(error.message)
@@ -25,39 +26,41 @@ export default class PersonnesController extends PersonneValidator {
             const prayload = await request.validate({ schema: this.v_create })
             const prayloadPhone = await request.validate({ schema: this.v_phones })
             try {
-                  const _personne = await this.personne.create(prayload)
+                  const _landlord = await this.landlord.create(prayload)
                   let phones: unknown
-                  if (_personne) {
+
+                  if (_landlord) {
                         prayloadPhone.phones.map((value) => {
-                              value.personne_id = _personne.id
+                              value.landlordId = _landlord.id
                         })
-                        phones = await this.personne.registrePhone(prayloadPhone.phones)
+                        phones = await this.landlord.registrePhone(prayloadPhone.phones)
                   }
 
                   return response.created({
                         status: true, data: {
-                              personne: _personne,
+                              personne: _landlord,
                               phones
                         }
                   })
+
             } catch (error: any) {
                   Logger.error(error.message)
-                  return response.expectationFailed({ status: false, data: null, message: error.message })
+                  return response.expectationFailed({ status: false, message: error.message })
             }
       }
 
       public async update({ request, response }: HttpContextContract) {
-            const prayload = await request.validate({ schema: this.v_update })
+            const prayload = await request.validate({ schema: this.v_create })
             const { id } = await request.validate({
                   schema: this.v_delete,
                   data: { id: request.param('id') }
             })
             try {
 
-                  if (!await this.personne.find({ key: 'id', value: id }))
+                  if (!await this.landlord.find({ key: 'id', value: id }))
                         return response.notFound({ status: false, message: 'Personne no found.' })
 
-                  const data = await this.personne.update(id, prayload)
+                  const data = await this.landlord.update(id, prayload)
                   return response.created({
                         status: true, data
                   })
@@ -74,12 +77,12 @@ export default class PersonnesController extends PersonneValidator {
             })
             try {
 
-                  if (!await this.personne.find({ key: 'id', value: id }))
-                        return response.notFound({ status: false, message: 'Personne no found.' })
+                  if (!await this.landlord.find({ key: 'id', value: id }))
+                        return response.notFound({ status: false, message: 'Landlord no found.' })
 
-                  await this.personne.delete(id)
+                  await this.landlord.delete(id)
                   return response.created({
-                        status: true, data: 'personne deleted.'
+                        status: true, data: 'Landlord deleted.'
                   })
             } catch (error: any) {
                   Logger.error(error.message)
@@ -88,8 +91,8 @@ export default class PersonnesController extends PersonneValidator {
       }
 
       /**
-       * Phones
-       */
+      * Phones
+      */
       public async addPhone({ request, response }: HttpContextContract) {
             const { id } = await request.validate({
                   schema: this.v_delete,
@@ -99,12 +102,12 @@ export default class PersonnesController extends PersonneValidator {
             const prayload = await request.validate({ schema: this.v_phone })
             try {
 
-                  if (!await this.personne.find({ key: 'id', value: id }))
+                  if (!await this.landlord.find({ key: 'id', value: id }))
                         return response.notFound({ status: false, message: 'Personne no found.' })
 
-                  prayload.personne_id = id
-                  await this.personne.registrePhone([prayload])
-                  const data = await this.personne.find({ key: 'id', value: id })
+                  prayload.landlordId = id
+                  await this.landlord.registrePhone([prayload])
+                  const data = await this.landlord.find({ key: 'id', value: id })
                   return response.created({
                         status: true, data
                   })
@@ -123,10 +126,10 @@ export default class PersonnesController extends PersonneValidator {
             const prayload = await request.validate({ schema: this.v_phone })
             try {
 
-                  if (!await this.personne.findPhone({ key: 'id', value: id }))
+                  if (!await this.landlord.findPhone({ key: 'id', value: id }))
                         return response.notFound({ status: false, message: 'Phone no found.' })
 
-                  await this.personne.updatePhone(id, prayload)
+                  await this.landlord.updatePhone(id, prayload)
                   return response.created({
                         status: true, message: 'Phone updated.'
                   })
@@ -143,12 +146,12 @@ export default class PersonnesController extends PersonneValidator {
 
             // const prayload = await request.validate({ schema: this.v_phone })
             try {
-                  const phoneFind = await this.personne.findPhone({ key: 'id', value: id })
+                  const phoneFind = await this.landlord.findPhone({ key: 'id', value: id })
                   if (!phoneFind)
                         return response.notFound({ status: false, message: 'Phone no found.' })
 
-                  await this.personne.updatePhoneDefault(phoneFind.personneId)
-                  await this.personne.updatePhone(id, { running: true })
+                  await this.landlord.updatePhoneDefault(phoneFind.landlordId)
+                  await this.landlord.updatePhone(id, { running: true })
                   return response.created({
                         status: true, message: 'Phone updated.'
                   })
@@ -165,10 +168,10 @@ export default class PersonnesController extends PersonneValidator {
             })
             try {
 
-                  if (!await this.personne.findPhone({ key: 'id', value: id }))
+                  if (!await this.landlord.findPhone({ key: 'id', value: id }))
                         return response.notFound({ status: false, message: 'Phone no found.' })
 
-                  await this.personne.deletePhone(id)
+                  await this.landlord.deletePhone(id)
                   return response.created({
                         status: true, message: 'Phone deleted.'
                   })

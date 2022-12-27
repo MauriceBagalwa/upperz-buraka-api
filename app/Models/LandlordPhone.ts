@@ -2,14 +2,14 @@ import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
 import generate from "App/Utils/Generator"
 import { DateTime } from 'luxon'
 
-export default class PersonnePhone extends BaseModel {
+export default class LandlordPhone extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
-  @column()
-  public personneId: string
+  @column({ serializeAs: 'landlordId' })
+  public landlordId: string
 
-  @column()
+  @column({ serializeAs: 'countryCode' })
   public countryCode: string
 
   @column()
@@ -25,8 +25,10 @@ export default class PersonnePhone extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword(model: PersonnePhone) {
+  public static async hashPassword(model: LandlordPhone) {
     model.id = await generate.id()
   }
 
 }
+
+

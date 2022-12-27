@@ -103,7 +103,6 @@ export default class EntreprisesController extends EntrepriseValidator {
             const payload = await request.validate({ schema: this.v_new_address })
             const { id } = await request.validate({ schema: this.v_delete, data: { id: request.param('id') } })
             try {
-
                   payload.entreprise_id = id
                   if (!await this.enreprise.find({ key: 'id', value: payload!.entreprise_id }))
                         return response.notFound({ status: false, message: 'Entreprise not found' })

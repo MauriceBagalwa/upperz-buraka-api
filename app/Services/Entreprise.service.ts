@@ -16,9 +16,10 @@ export default class EntrepriseService {
             return this.model.query()
                   .preload('addresses')
                   .preload('banks')
+                  .orderBy('createdAt', 'desc')
                   .first()
       }
-      
+
       public async find(params: i.IFindByKeyValue): Promise<Entreprise | null> {
             return this.model.query().where(params.key, params.value as string)
                   .preload('addresses')

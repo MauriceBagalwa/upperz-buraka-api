@@ -4,10 +4,10 @@ import generate from "App/Utils/Generator"
 import appartement from 'App/Services/Appartement.service'
 import location from 'App/Services/Location.service'
 import User from './User'
-import Personne from './Personne'
+import Landlord from './Landlord'
 import Appartement from './Appartement'
 
-export default class RentalLocation extends BaseModel {
+export default class RentalContrat extends BaseModel {
 
   @column({ isPrimary: true })
   public id: string
@@ -16,7 +16,7 @@ export default class RentalLocation extends BaseModel {
   public appartementId: string
 
   @column({ serializeAs: 'landlord' })
-  public personneId: string
+  public landlordId: string
 
   @column()
   public amount: number
@@ -26,6 +26,9 @@ export default class RentalLocation extends BaseModel {
 
   @column()
   public current: boolean
+
+  @column()
+  public numberOfHabitant: number
 
   @column()
   public status: boolean
@@ -46,24 +49,24 @@ export default class RentalLocation extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword(model: RentalLocation) {
+  public static async hashPassword(model: RentalContrat) {
     model.id = await generate.id()
   }
 
   @afterCreate()
-  public static async updateStatus(model: RentalLocation) {
+  public static async updateStatus(model: RentalContrat) {
     await appartement.Instance.update(model.appartementId, { status: true })
 
     const month = location.guranteeMoth
-    await location.Instance.registreGuarantee({ amount: model.amount, month, rentalLocationId: model.id })
+    await location.Instance.registreGuarantee({ amount: model.amount, month, rentalContratId: model.id })
   }
 
   @belongsTo(() => User, {})
   public user: BelongsTo<typeof User>
 
   @belongsTo(() => Appartement, {})
-  public appatement: BelongsTo<typeof Appartement>
+  public appartement: BelongsTo<typeof Appartement>
 
-  @belongsTo(() => Personne, {})
-  public landlord: BelongsTo<typeof Personne>
+  @belongsTo(() => Landlord, {})
+  public landlord: BelongsTo<typeof Landlord>
 }

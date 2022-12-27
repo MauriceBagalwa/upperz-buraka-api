@@ -1,14 +1,15 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'rental_locations'
+  protected tableName = 'rental_contrats'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().notNullable()
       table.uuid('user_id').references('users.id').notNullable().onDelete('CASCADE')
       table.uuid('appartement_id').references('appartements.id').notNullable().onDelete('CASCADE')
-      table.uuid('personne_id').references('personnes.id').notNullable().onDelete('CASCADE')
+      table.uuid('landlord_id').references('landlords.id').notNullable().onDelete('CASCADE')
+      table.integer('number_of_habitant').notNullable()
       table.float('amount').notNullable()
       table.string('currency', 4).defaultTo('USD')
       table.timestamp('start_date', { useTz: true })
