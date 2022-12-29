@@ -34,7 +34,7 @@ export default class LocationService {
                         query.select(['id', 'name', 'lastname', 'email', 'profile'])
                   })
                   .preload('appartement', (query) => {
-                        query.select(['id', 'type_bien_id', 'type_appartement_id', 'number', 'description', 'features']).preload("typeBien", (query) => {
+                        query.select(['id', 'type_bien_id', 'type_appartement_id', 'number', 'designation', 'description', 'features']).preload("typeBien", (query) => {
                               query.select(['id', 'designation', 'description'])
                         }).preload("typeAppartement", (query) => {
                               query.select(['id', 'designation', 'description'])
@@ -60,7 +60,7 @@ export default class LocationService {
       }
 
       public async break(params: i.IBreakContrat, input: object): Promise<RentalLocation[]> {
-            return await this.rental.query().where('appartement_id', params.appartementId).where('personne_id', params.landlordId).update(input)
+            return await this.rental.query().where('appartement_id', params.appartementId).where('landlord_id', params.landlordId).update(input)
       }
 
       public async delete(id: string): Promise<RentalLocation> {

@@ -50,10 +50,10 @@ export default class GeneralCaseValidator {
   })
 
   public v_upload_multiple = schema.create({
-    images: schema.array([rules.minLength(1), rules.maxLength(5)]).members( 
+    images: schema.array([rules.minLength(1), rules.maxLength(5)]).members(
       schema.file({
         extnames: ['jpg', 'png', 'gif', 'jpeg'],
-        size: '2mb',
+        size: '20mb',
       })
     )
   })
@@ -61,7 +61,7 @@ export default class GeneralCaseValidator {
   public v_multi_profile = schema.create({
     profile: schema.file({
       extnames: ['jpg', 'png', 'gif', 'jpeg'],
-      size: '2mb',
+      size: '20mb',
     }),
   })
 

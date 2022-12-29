@@ -86,6 +86,7 @@ export interface IQAppartement extends IQuerry {
 export interface IAppartement {
       typeBienId: string
       typeAppartementId: string
+      designatiom?: string
       description: string
       features: string
       number?: number
@@ -175,4 +176,17 @@ export interface IGuaranteeQuerry extends IQuerry {
 export interface IBreakContrat {
       appartementId: string
       landlordId: string
+}
+
+/**
+ * Recovery
+ */
+export interface IRecoveryQuery extends IQuerry {
+      rentalContratStatus: boolean
+}
+export interface IRecovery {
+      rentalContratId: string
+      labelMonth: string
+      labelStr: string
+      date_recovery: moment.Moment
 }

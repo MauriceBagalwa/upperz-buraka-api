@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.uuid('id').primary().notNullable()
       table.uuid('landlord_id').references('landlords.id').notNullable().onDelete('CASCADE')
       table.string('country_code', 5)
-      table.string('number', 12)
+      table.string('number', 12).unique()
       table.boolean('running').defaultTo(false)
 
       /**

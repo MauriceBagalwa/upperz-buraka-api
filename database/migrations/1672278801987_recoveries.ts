@@ -1,20 +1,16 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'appartements'
+  protected tableName = 'recoveries'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.uuid('id').primary()
-      table.string('designation')
-      table.uuid('type_bien_id').references('type_biens.id').primary().notNullable()
-      table.uuid('type_appartement_id').references('type_appartements.id').primary().notNullable()
-      table.integer('number').notNullable().defaultTo(0)
-      table.string('description').notNullable()
-      table.string('features').notNullable()
+      table.uuid('id').primary().notNullable()
+      table.uuid('rental_contrat_id').references('rental_contrats.id').notNullable().onDelete('CASCADE')
+      table.string('label_month', 20).notNullable()
+      table.string('label_str', 80).notNullable()
+      table.timestamp('date_recovery', { useTz: true }).notNullable()
       table.boolean('status').defaultTo(false)
-      table.integer('price').notNullable()
-
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

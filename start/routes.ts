@@ -25,7 +25,16 @@ import "./routes/type"
 import "./routes/user"
 import "./routes/personne"
 import "./routes/location"
+import moment from 'moment'
 
 Route.get('/', async () => {
-  return { hello: 'Welcome to the party of yakuza 🚀' }
+
+  moment.locale('fr');
+  const nextMonth = moment().add(1, 'months')
+  const month = moment().add(1, 'months').format('MMMM')
+  const year = nextMonth.year()
+  // const d2 = d
+
+  // return { hello: 'Welcome to the party of yakuza 🚀' }
+  return { next_date: nextMonth, month: `paiement de loyer du mois de ${month}`, year }
 })

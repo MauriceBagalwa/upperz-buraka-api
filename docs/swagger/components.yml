@@ -30,7 +30,7 @@ components:
         - description
         - features
         - address
-    Personne:
+    Landlord:
       type: object
       properties:
         name:
@@ -53,16 +53,17 @@ components:
         landlordType:
           type: string
           enum: [personne physique, entreprise]
-        phones: array
-        items:
-          type: object
-          properties:
-            countryCode:
-              type: string
-            number:
-              type: string
-            running:
-              type: boolean
+        phones:
+          type: array
+          items:
+            type: object
+            properties:
+              countryCode:
+                type: string
+              number:
+                type: string
+              running:
+                type: boolean
       required:
         - name
         - lastname

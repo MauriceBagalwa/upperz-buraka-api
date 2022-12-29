@@ -10,6 +10,9 @@ export default class Appartement extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
+  @column()
+  public designation: string
+
   @column({ serializeAs: 'typeBien' })
   public typeBienId: string
 
