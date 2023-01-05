@@ -17,7 +17,7 @@
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/greate_response"
+              $ref: "#/components/schemas/great_response"
 
       422:
         description: En cas d'echec

@@ -17,8 +17,4 @@ export default class AppartementAddressService {
             await this.address.query().where('id', id).update(input).first()
             return this.address.findBy('id', id)
       }
-
-      // public async deleteAddress(id: string): Promise<AppartementAddress | null> {
-      //       return await this.address.query().where('id', id).delete().first()
-      // }
 }

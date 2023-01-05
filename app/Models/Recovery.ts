@@ -1,14 +1,21 @@
-import { BaseModel, BelongsTo, beforeSave, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasMany, beforeSave, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import generate from "App/Utils/Generator"
 import RentalContrat from './RentalContrat'
 import { DateTime } from 'luxon'
+import Payment from './Payment'
+
+export enum RecoveryColors {
+  BLUE = "#2D2D2D",
+  RED = "#FF0000",
+  SEMI_RED = "#FF9999",
+}
 
 export default class Recovery extends BaseModel {
 
   @column({ isPrimary: true })
   public id: string
 
-  @column({ serializeAs: 'rentalContrat' })
+  @column({ serializeAs: 'rental_contrat' })
   public rentalContratId: string
 
   @column()
@@ -17,8 +24,11 @@ export default class Recovery extends BaseModel {
   @column()
   public labelStr: string
 
+  @column.dateTime()
+  public dateRecovery: DateTime
+
   @column()
-  public dateRecovery: moment.Moment
+  public color: RecoveryColors
 
   @column()
   public status: Boolean
@@ -35,16 +45,18 @@ export default class Recovery extends BaseModel {
   }
 
   @belongsTo(() => RentalContrat, {})
-  public rentalContrat: BelongsTo<typeof RentalContrat>
+  public rental_contrat: BelongsTo<typeof RentalContrat>
+
+  @hasMany(() => Payment, {})
+  public payments: HasMany<typeof Payment>
 
   /**
  * Serialize the `$extras` object as it is
  */
-  public serializeExtras = true
-  // () {
-  //   return {
-  //     rendir: this.$extras.rendir,
-  //     numberOfRides: this.$extras.size,
-  //   }
-  // }
+  public serializeExtras() {
+    return {
+      total: this.$extras.total_payment
+    }
+  }
+
 }

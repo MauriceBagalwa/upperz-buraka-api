@@ -11,7 +11,7 @@ export interface ISimpleRegistre {
 
 export interface IFindByKeyValue {
       key: string,
-      value?: string
+      value: string
 }
 
 export interface IFindAddress {
@@ -188,5 +188,27 @@ export interface IRecovery {
       rentalContratId: string
       labelMonth: string
       labelStr: string
-      date_recovery: moment.Moment
+      date_recovery: string
+}
+
+export interface IRecoveryStatus {
+      status: boolean
+      amount: number
+}
+
+/**
+ * P A Y M E N T
+ */
+export interface IPayment {
+      recovery_id: string,
+      type: TypePayment,
+      amount: number,
+      user_id?: string
+}
+
+export interface IBankPayment {
+      payment_id: string,
+      bank_account_id: string,
+      payment_date: date,
+      user_id?: string
 }

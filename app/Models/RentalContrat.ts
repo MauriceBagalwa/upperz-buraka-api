@@ -68,13 +68,14 @@ export default class RentalContrat extends BaseModel {
     await location.Instance.registreGuarantee({ amount: model.amount, month, rentalContratId: model.id })
     //3
     const nextDate = moment().add(1, 'months')
+    // .format('YYYY-MM-DD')
     moment.locale('fr');
     const month_label = moment().add(1, 'months').format('MMMM')
     // var nextDate = moment().add(1, 'months')
 
     console.log(`Next month: ${moment().add(1, 'months')}`)
     await recovery.Instance.registre({
-      date_recovery: nextDate,
+      date_recovery: nextDate.format(),
       labelMonth: `${month_label}-${nextDate.year()}`,
       labelStr: `paiement loyer du mois de ${month_label}.`,
       rentalContratId: model.id

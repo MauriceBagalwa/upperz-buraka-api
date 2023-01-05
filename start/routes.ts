@@ -25,16 +25,27 @@ import "./routes/type"
 import "./routes/user"
 import "./routes/personne"
 import "./routes/location"
-import moment from 'moment'
+// import moment from 'moment'
 
 Route.get('/', async () => {
 
-  moment.locale('fr');
-  const nextMonth = moment().add(1, 'months')
-  const month = moment().add(1, 'months').format('MMMM')
-  const year = nextMonth.year()
+  // const dateOne = moment(moment('2023-01-01T14:34:18.000+01:00'))
+  // const dayTwo = moment()
+  // const result = dateOne.diff(moment(), 'minute')
+  // const hours = (result / 60)
+  // const days = (hours / 24)
   // const d2 = d
-
-  // return { hello: 'Welcome to the party of yakuza 🚀' }
-  return { next_date: nextMonth, month: `paiement de loyer du mois de ${month}`, year }
+  // var now = moment();
+  // var day = moment(moment('2023-01-06T14:34:18.000+01:00'));
+  // var remaining = day.diff(now, 'days');
+  return { hello: 'Welcome to the party of yakuza 🚀' }
+  // return {
+  //   remaining
+  //   dateOne,
+  //   dayTwo,
+  //   result,
+  //   minutes: result,
+  //   hours,
+  //   days:Math.round(days),
+  // }
 })
