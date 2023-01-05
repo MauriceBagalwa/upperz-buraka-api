@@ -11,9 +11,9 @@ export default class EntrepriseValidator {
   })
 
   public v_update_entreprise = schema.create({
-    designation: schema.string({ trim: true }, [rules.minLength(5), rules.maxLength(50)]),
-    description: schema.string({ trim: true }, [rules.minLength(5), rules.maxLength(250)]),
-    rccm: schema.string({ trim: true }, [rules.minLength(10), rules.maxLength(100)]),
+    designation: schema.string.optional({ trim: true }, [rules.minLength(5), rules.maxLength(50)]),
+    description: schema.string.optional({ trim: true }, [rules.minLength(5), rules.maxLength(250)]),
+    rccm: schema.string.optional({ trim: true }, [rules.minLength(10), rules.maxLength(100)]),
   })
 
 

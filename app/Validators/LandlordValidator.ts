@@ -31,8 +31,8 @@ export default class LandlordValidator extends GeneralCaseValidator {
   public v_phones = schema.create({
     phones: schema.array([rules.minLength(1), rules.maxLength(3)]).members(
       schema.object().members({
-        countryCode: schema.string([rules.regex(/^(\+?\d{1,3}|\d{1,4})$/)]),
-        number: schema.string([rules.maxLength(10)]),
+        countryCode: schema.string(),
+        number: schema.string(),
         running: schema.boolean(),
         landlordId: schema.string.optional(),
       })
@@ -40,8 +40,8 @@ export default class LandlordValidator extends GeneralCaseValidator {
   })
 
   public v_phone = schema.create({
-    countryCode: schema.string([rules.regex(/^(\+?\d{1,3}|\d{1,4})$/)]),
-    number: schema.string([rules.maxLength(10)]),
+    countryCode: schema.string(),
+    number: schema.string(),
     landlordId: schema.string.optional(),
   })
 
