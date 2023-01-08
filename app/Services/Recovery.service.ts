@@ -14,6 +14,16 @@ export default class RecoveryService {
                   .first()
       }
 
+      public async rest(id: string): Promise<Recovery | null> {
+            return await this.recovery.query().select(['id', 'rental_contrat_id']).where('id', id)
+                  .preload('rental_contrat', (query) => {
+                        query.select(['id', 'amount'])
+                  })
+                  .withAggregate('payments', (query) => {
+                        query.sum('amount').as('total_payment')
+                  })
+                  .first()
+      }
       public async sum(id: string): Promise<Recovery | null> {
             return await this.recovery.query().select(['id']).where('id', id)
                   .withAggregate('payments', (query) => {
@@ -32,7 +42,7 @@ export default class RecoveryService {
                         })
                               .preload('appartement', (query) => {
                                     query.select(['id', 'type_bien_id', 'type_appartement_id', 'number', 'designation', 'description', 'features']).preload("typeBien", (query) => {
-                                          query.select([  'id', 'designation', 'description'])
+                                          query.select(['id', 'designation', 'description'])
                                     }).preload("typeAppartement", (query) => {
                                           query.select(['id', 'designation', 'description'])
                                     })
@@ -88,5 +98,10 @@ export default class RecoveryService {
 
       public static get Instance() {
             return this._instance || (this._instance = new this())
+      }
+
+
+      public async list(): Promise<Recovery[]> {
+            return this.recovery.query().where('status', false).where('desaly', false)
       }
 }

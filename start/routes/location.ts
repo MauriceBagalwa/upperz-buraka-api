@@ -6,6 +6,7 @@ Route.group(() => {
             Route.post('rental-contrats/break/:id', 'RentalContratsController.breakContract')
             Route.get('guarantees', 'RentalContratsController.indexGuarantee')
             Route.resource('recoveries', 'RecoveriesController')
+            Route.get('left_to_pay/:id', 'RecoveriesController.leftToPay')
 
             Route.resource('payments/bank', 'BankPaymentsController')
             Route.resource('payments', 'PaymentsController')

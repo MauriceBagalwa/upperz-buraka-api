@@ -21,4 +21,22 @@ export default class RecoveriesController {
                   return response.expectationFailed({ status: false, data: null, message: error.message })
             }
       }
+
+      public async leftToPay({ request, response }: HttpContextContract) {
+            try {
+                  const id = request.param('id')
+                  const result = await this.recovery.rest(id)
+                  return response.ok({
+                        status: true, data: {
+                              amount: result?.rental_contrat.amount,
+                              lat_to_pay: (result?.rental_contrat?.amount! - result?.$extras.total_payment)
+                        }
+                  })
+            } catch (error: any) {
+                  Logger.error(error.message)
+                  return response.expectationFailed({ status: false, data: null, message: error.message })
+            }
+      }
+
+
 }

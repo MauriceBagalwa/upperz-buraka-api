@@ -33,6 +33,9 @@ export default class Recovery extends BaseModel {
   @column()
   public status: Boolean
 
+  @column()
+  public deslay: Boolean
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -51,8 +54,8 @@ export default class Recovery extends BaseModel {
   public payments: HasMany<typeof Payment>
 
   /**
- * Serialize the `$extras` object as it is
- */
+   * Serialize the `$extras` object as it is
+   */
   public serializeExtras() {
     return {
       total: this.$extras.total_payment

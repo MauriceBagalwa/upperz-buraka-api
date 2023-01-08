@@ -26,6 +26,9 @@ export default class AppartementService {
                   .if(params.typeBien, (query) => {
                         query.where('type_bien_id', params.typeBien)
                   })
+                  .if(params.status, (query) => {
+                        query.where('status', params.status!)
+                  })
                   .preload("typeBien", (query) => {
                         query.select(['id', 'designation', 'description'])
                   })
