@@ -2,6 +2,7 @@ import { BaseModel, BelongsTo, afterSave, beforeSave, belongsTo, column } from '
 import generate from 'App/Utils/Generator'
 import Recovery from './Recovery'
 import { DateTime } from 'luxon'
+import User from './User'
 
 export enum TypePayment {
   CASH = 'cash',
@@ -56,5 +57,8 @@ export default class Payment extends BaseModel {
 
   @belongsTo(() => Recovery)
   public recovery: BelongsTo<typeof Recovery>
+
+  @belongsTo(() => User)
+  public created_by: BelongsTo<typeof User>
 
 }

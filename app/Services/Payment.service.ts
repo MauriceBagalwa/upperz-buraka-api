@@ -11,8 +11,22 @@ export default class PaymentService {
             return this.payment.query()
                   .preload('recovery', (query) => {
                         query.preload('rental_contrat', (query) => {
-                              query.select(['id', 'user_id', 'appartement_id', 'landlord_id', 'number_of_habitant', 'amount', 'currency', 'start_date', 'current'])
+                              query.select(['id', 'user_id', 'appartement_id', 'landlord_id', 'number_of_habitant', 'amount', 'currency', 'start_date', 'current']).preload('user', (query) => {
+                                    query.select(['id', 'name', 'lastname', 'country_code', 'phone_number', 'email', 'profile'])
+                              }).preload('landlord', (query) => {
+                                    query.select(['id', 'name', 'lastname', 'email', 'profile'])
+                              })
+                                    .preload('appartement', (query) => {
+                                          query.select(['id', 'type_bien_id', 'type_appartement_id', 'number', 'designation', 'description', 'features']).preload("typeBien", (query) => {
+                                                query.select(['id', 'designation', 'description'])
+                                          }).preload("typeAppartement", (query) => {
+                                                query.select(['id', 'designation', 'description'])
+                                          })
+                                    })
                         })
+                  })
+                  .preload('created_by', (query) => {
+                        query.select(['id', 'name', 'lastname', 'country_code', 'phone_number', 'email', 'profile'])
                   })
                   .orderBy('created_at', 'desc')
                   .paginate(param.page, param.limit)
