@@ -37,6 +37,13 @@ export default class AppartementService {
                   })
                   .preload("address")
                   .preload("images")
+                  .preload('rental_contrat', (query) => {
+                        query.where('current', true).select(['id', 'user_id', 'appartement_id', 'landlord_id', 'number_of_habitant', 'amount', 'currency', 'start_date', 'current']).preload('user', (query) => {
+                              query.select(['id', 'name', 'lastname', 'country_code', 'phone_number', 'email', 'profile'])
+                        }).preload('landlord', (query) => {
+                              query.select(['id', 'name', 'lastname', 'email', 'profile'])
+                        })
+                  })
                   .orderBy('created_at', 'desc')
                   .paginate(params.page, params.limit)
       }

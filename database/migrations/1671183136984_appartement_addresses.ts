@@ -10,6 +10,7 @@ export default class extends BaseSchema {
       table.string('country').notNullable()
       table.string('town').notNullable()
       table.string('city').notNullable()
+      table.string('common').notNullable()
       table.string('quarter').notNullable()
       table.string('street').notNullable()
       table.integer('number').notNullable()

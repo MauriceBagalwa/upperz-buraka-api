@@ -8,7 +8,12 @@ export default class extends BaseSchema {
       table.uuid('id').primary()
       table.string('designation', 50).notNullable()
       table.string('description')
-      table.string('rccm').notNullable()
+      table.string('rccm')
+      table.string('tax_number')
+      table.string('inat')
+      table.string('phones')
+      table.string('email')
+      table.string('site')
       table.string('logo')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

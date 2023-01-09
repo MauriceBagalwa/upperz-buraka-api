@@ -5,6 +5,7 @@ import generate from 'App/Utils/Generator'
 import TypeBien from './TypeBien'
 import { DateTime } from 'luxon'
 import AppartementAddress from './AppartementAddress'
+import RentalContrat from './RentalContrat'
 
 export default class Appartement extends BaseModel {
   @column({ isPrimary: true })
@@ -57,4 +58,7 @@ export default class Appartement extends BaseModel {
 
   @belongsTo(() => TypeBien, {})
   public typeBien: BelongsTo<typeof TypeBien>
+
+  @hasMany(() => RentalContrat, {})
+  public rental_contrat: HasMany<typeof RentalContrat>
 }

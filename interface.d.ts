@@ -42,9 +42,11 @@ export interface IEntreprise {
       description: string
       rccm: string
       logo?: string
-      // address: [IAddress]
-      // bank_accounts: [IBankAcount]
-
+      tax_number: string
+      inat: string
+      phones: string
+      email: string
+      site: string
 }
 
 export interface IAddress {
@@ -52,6 +54,7 @@ export interface IAddress {
       country: string
       town: string
       city: string
+      common: string
       quarter: string
       street: string
       number: number

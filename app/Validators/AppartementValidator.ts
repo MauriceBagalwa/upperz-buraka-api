@@ -22,6 +22,7 @@ export default class AppartementValidator extends GeneralCaseValidator {
       country: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
       town: schema.string({ trim: true }, [rules.minLength(4), rules.maxLength(50)]),
       city: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
+      common: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
       quarter: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
       street: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
       number: schema.number()
@@ -32,6 +33,7 @@ export default class AppartementValidator extends GeneralCaseValidator {
     country: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
     town: schema.string({ trim: true }, [rules.minLength(4), rules.maxLength(50)]),
     city: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
+    common: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
     quarter: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
     street: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
     number: schema.number()

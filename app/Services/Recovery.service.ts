@@ -49,9 +49,6 @@ export default class RecoveryService {
                               })
                   })
                   .preload('payments')
-            // .withAggregate('payments', (query) => {
-
-            // }).first()
       }
 
       public async getAll(param: i.IRecoveryQuery): Promise<Recovery[] | null> {
@@ -60,17 +57,12 @@ export default class RecoveryService {
                   .if(param.status, (query) => {
                         query.where('status', param.status!)
                   })
-                  // .whereNot('rental_contrat_id',)
-                  // .if(param.rentalContratStatus, (query) => {
-                  //       query.where('current', param.rentalContratStatus)
-                  // })
                   .preload('rental_contrat', (query) => {
                         query.select(['id', 'user_id', 'appartement_id', 'landlord_id', 'number_of_habitant', 'amount', 'currency', 'start_date', 'current']).preload('user', (query) => {
                               query.select(['id', 'name', 'lastname', 'country_code', 'phone_number', 'email', 'profile'])
+                        }).preload('landlord', (query) => {
+                              query.select(['id', 'name', 'lastname', 'email', 'profile'])
                         })
-                              .preload('landlord', (query) => {
-                                    query.select(['id', 'name', 'lastname', 'email', 'profile'])
-                              })
                               .preload('appartement', (query) => {
                                     query.select(['id', 'type_bien_id', 'type_appartement_id', 'number', 'designation', 'description', 'features']).preload("typeBien", (query) => {
                                           query.select(['id', 'designation', 'description'])

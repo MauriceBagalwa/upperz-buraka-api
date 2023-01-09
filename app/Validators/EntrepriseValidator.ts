@@ -6,14 +6,24 @@ export default class EntrepriseValidator {
   public v_entreprise_create = schema.create({
     designation: schema.string({ trim: true }, [rules.minLength(5), rules.maxLength(50)]),
     description: schema.string({ trim: true }, [rules.minLength(5), rules.maxLength(250)]),
-    rccm: schema.string({ trim: true }, [rules.minLength(10), rules.maxLength(100)]),
+    rccm: schema.string({ trim: true }, [rules.minLength(7), rules.maxLength(100)]),
+    tax_number: schema.string.optional({ trim: true }, [rules.minLength(7), rules.maxLength(100)]),
+    inat: schema.string.optional({ trim: true }, [rules.minLength(5), rules.maxLength(100)]),
+    phones: schema.string.optional({ trim: true }, [rules.minLength(5), rules.maxLength(200)]),
+    email: schema.string.optional([rules.email()]),
+    site: schema.string.optional({ trim: true }, [rules.minLength(5), rules.maxLength(200)]),
     logo: schema.string.optional()
   })
 
   public v_update_entreprise = schema.create({
     designation: schema.string.optional({ trim: true }, [rules.minLength(5), rules.maxLength(50)]),
     description: schema.string.optional({ trim: true }, [rules.minLength(5), rules.maxLength(250)]),
-    rccm: schema.string.optional({ trim: true }, [rules.minLength(10), rules.maxLength(100)]),
+    rccm: schema.string({ trim: true }, [rules.minLength(7), rules.maxLength(100)]),
+    tax_number: schema.string.optional({ trim: true }, [rules.minLength(7), rules.maxLength(100)]),
+    inat: schema.string.optional({ trim: true }, [rules.minLength(5), rules.maxLength(100)]),
+    phones: schema.string.optional({ trim: true }, [rules.minLength(5), rules.maxLength(200)]),
+    email: schema.string.optional([rules.email()]),
+    site: schema.string.optional({ trim: true }, [rules.minLength(5), rules.maxLength(200)]),
   })
 
 
@@ -31,6 +41,7 @@ export default class EntrepriseValidator {
         country: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
         town: schema.string({ trim: true }, [rules.minLength(4), rules.maxLength(50)]),
         city: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
+        common: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
         quarter: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
         street: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
         number: schema.number()
@@ -43,6 +54,7 @@ export default class EntrepriseValidator {
     country: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
     town: schema.string({ trim: true }, [rules.minLength(4), rules.maxLength(50)]),
     city: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
+    common: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
     quarter: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
     street: schema.string({ trim: true }, [rules.minLength(3), rules.maxLength(50)]),
     number: schema.number()

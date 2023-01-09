@@ -50,7 +50,7 @@ export default class PaymentsController extends PaymentValidator {
                   response.created({
                         status: true, data: {
                               payment: result,
-                              rest: (recovery.rental_contrat.amount - sum)
+                              lat_to_pay: (recovery.rental_contrat.amount - sum)
                         }
                   })
 
@@ -70,11 +70,6 @@ export default class PaymentsController extends PaymentValidator {
                   const result = await this.recovery.historical(id)
                   if (!result)
                         return response.notFound({ status: false, message: 'Recovery not found.' })
-                  //3
-                  // const data = await this.recovery.sum(id)
-
-                  //3
-
                   response.created({
                         status: true, data: result
                   })
@@ -84,6 +79,7 @@ export default class PaymentsController extends PaymentValidator {
                   return response.expectationFailed({ status: false, message: error.message })
             }
       }
+
       public async destroy({ request, response }: HttpContextContract) {
 
             const payload = await request.validate({

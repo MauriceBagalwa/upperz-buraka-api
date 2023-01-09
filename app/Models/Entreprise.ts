@@ -18,6 +18,21 @@ export default class Entreprise extends BaseModel {
   public rccm: string
 
   @column()
+  public tax_number: string
+
+  @column()
+  public inat: string
+
+  @column()
+  public phones: string
+
+  @column()
+  public email: string
+
+  @column()
+  public site: string
+
+  @column()
   public logo: string
 
   @column.dateTime({ autoCreate: true })
@@ -33,7 +48,7 @@ export default class Entreprise extends BaseModel {
 
   @hasMany(() => Address, {})
   public addresses: HasMany<typeof Address>
-  
+
   @hasMany(() => BankAccount, {})
   public banks: HasMany<typeof BankAccount>
 }

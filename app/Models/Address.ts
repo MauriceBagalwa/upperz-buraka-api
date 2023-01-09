@@ -20,6 +20,9 @@ export default class Address extends BaseModel {
   public city: string
 
   @column()
+  public common: string
+
+  @column()
   public quarter: string
 
   @column()

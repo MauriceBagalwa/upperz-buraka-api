@@ -27,7 +27,7 @@ export default class EntrepriseService {
                   .first()
       }
 
-      public async registre(input: i.IEntreprise): Promise<Entreprise> {
+      public async registre(input: Partial<i.IEntreprise>): Promise<Entreprise> {
             return this.model.create(input)
       }
 
